@@ -26,7 +26,7 @@ def t(tool, inp, cwd=CWD):
 block = [
     # 1. git push とリモート操作
     ("Bash", {"command": "git push origin master"}),
-    ("Bash", {"command": 'git -C "C:/Workspace/GameProject/GameBProject" push'}),
+    ("Bash", {"command": 'git -C "C:/Workspace/Games/GameBProject" push'}),
     ("Bash", {"command": "git -c http.extraHeader=x push --force origin HEAD"}),
     ("PowerShell", {"command": r"& git.exe push"}),
     ("Bash", {"command": "cd x && git remote add origin https://example.com/r.git"}),
@@ -50,7 +50,7 @@ block = [
     ("Bash", {"command": "python -c \"import subprocess; subprocess.run(['claude', '-p', 'x'])\""}),
     ("Bash", {"command": "codex exec 'x'"}),
     # 4. 作業ディレクトリの外での削除
-    ("Bash", {"command": "rm -rf C:/Workspace/GameProject/GameBProject"}),
+    ("Bash", {"command": "rm -rf C:/Workspace/Games/GameBProject"}),
     ("Bash", {"command": "rm -rf /c/Workspace/x"}),
     ("PowerShell", {"command": r"Remove-Item C:\Workspace\x -Recurse"}),
     ("Bash", {"command": "rm -rf ../other"}),

@@ -19,8 +19,8 @@
 
 ## 対象外（作業票に入れない）
 - `GameAProject/Live/`・`_public_copies/`・`排除/`（実運用・公開物・隔離）
-- `StudyProject/HandsOn/` の実装（🔴 Claude は実装コードを書かない案件。調べて選択肢を出す decide は可）
-- `StudyProject/FinishedProject/`（完成品）
+- `Learning/HandsOn/` の実装（🔴 Claude は実装コードを書かない案件。調べて選択肢を出す decide は可）
+- `Learning/FinishedProject/`（完成品）
 - 実機テストプレイ・ゲーム内での確認・エヴァの在席が前提のもの・購入・他人への連絡が本体のもの
 
 ## すでに扱ったもの（同じ出典で中身が変わっていなければ拾い直さない）

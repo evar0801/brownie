@@ -16,12 +16,12 @@ base["NIGHT_RUNNER"] = "1"
 # サーバーの登録簿は試験用の写しを渡す（その PC に実物が無くても同じ結果になる）
 _SRV = os.path.join(tempfile.mkdtemp(prefix="night_srv_"), "servers.json")
 with open(_SRV, "w", encoding="utf-8") as _f:
-    json.dump({"servers": [r"C:\Workspace\GameProject\GameBProject\server",
-                           r"C:\Workspace\GameProject\GameAProject\PackWork\packb\server"]}, _f)
+    json.dump({"servers": [r"C:\Workspace\Games\GameBProject\server",
+                           r"C:\Workspace\Games\GameAProject\PackWork\packb\server"]}, _f)
 base["NIGHT_SERVERS_JSON"] = _SRV
 WORK = dict(base, NIGHT_WORK_ROOT=WT, NIGHT_PROGRESS=PROG, NIGHT_KIND="run")
 NOWT = dict(base, NIGHT_PROGRESS=os.path.join(HERE, "state", "tonight.json"), NIGHT_KIND="triage")
-OUT = "C:/Workspace/GameProject/GameBProject"
+OUT = "C:/Workspace/Games/GameBProject"
 
 
 def run(tool, inp, env, cwd=WT, raw=None):
@@ -49,7 +49,7 @@ check("止める 別名の道具の git push", B, "SomeShell", {"command": "git 
 check("止める Monitor 経由の git push", B, "Monitor", {"command": "git push origin master"})
 # N3 作業コピーの外への書き込み
 for p in ("C:/Workspace/BrownieProject/hooks/night_guard.py", os.path.expanduser("~/.claude/tools/wt.py"),
-          os.path.expanduser("~/.claude/CLAUDE.md"), "C:/Workspace/DECISIONS.md", "C:/Workspace/GameProject/GameAProject/Live/x.toml"):
+          os.path.expanduser("~/.claude/CLAUDE.md"), "C:/Workspace/DECISIONS.md", "C:/Workspace/Games/GameAProject/Live/x.toml"):
     for tool in ("Write", "Edit"):
         check(f"止める {tool} 外 {p}", B, tool, {"file_path": p, "content": "x"})
 check("通す Write 作業コピーの中", P, "Write", {"file_path": os.path.join(WT, "docs", "a.md"), "content": "x"})
@@ -75,18 +75,18 @@ for c in ("git log", "git status", "git diff", "git config --get user.name", "gi
     check(f"通す 作業コピー無しで {c}", P, "Bash", {"command": c}, env=NOWT, cwd="C:/Workspace")
 # N5 実運用サーバー
 for c in ("taskkill /F /IM java.exe", "Stop-Process -Name valheim_server", "kill 1234", "Stop-Service x", "sc stop x",
-          "net stop x", "shutdown /s", r"powershell -File C:\Workspace\GameProject\GameBProject\tools\server_ctl.ps1 stop",
+          "net stop x", "shutdown /s", r"powershell -File C:\Workspace\Games\GameBProject\tools\server_ctl.ps1 stop",
           r"powershell -File C:\Workspace\KeeperProject\respawnkeeper.ps1", "cmd /c rk-start.bat",
           r"pwsh C:\x\escalate-claude.ps1"):
     check(f"止める {c}", B, "PowerShell", {"command": c})
-srv = r"C:\Workspace\GameProject\GameBProject\server"
-for c in (rf"Copy-Item a.dll {srv}\BepInEx\plugins\ ", r"Get-ChildItem C:\Workspace\GameProject\GameAProject\Live",
-          r"ls /c/Workspace/GameProject/GameAProject/PackWork/packb/server/mods",
+srv = r"C:\Workspace\Games\GameBProject\server"
+for c in (rf"Copy-Item a.dll {srv}\BepInEx\plugins\ ", r"Get-ChildItem C:\Workspace\Games\GameAProject\Live",
+          r"ls /c/Workspace/Games/GameAProject/PackWork/packb/server/mods",
           r"Copy-Item x $env:USERPROFILE\AppData\LocalLow\IronGate\Valheim\worlds_local",
           r"dir %APPDATA%\r2modmanPlus-local\Valheim"):
     check(f"止める サーバーの場所 {c}", B, "PowerShell", {"command": c})
 check("止める Write サーバーの場所（作業コピー無しでも）", B, "Write",
-      {"file_path": r"C:\Workspace\GameProject\GameAProject\Live\cfg\a.toml", "content": "x"}, env=NOWT)
+      {"file_path": r"C:\Workspace\Games\GameAProject\Live\cfg\a.toml", "content": "x"}, env=NOWT)
 for tool, key in (("Read", "file_path"), ("Grep", "path"), ("Glob", "path")):
     check(f"通す {tool} サーバーの場所", P, tool, {key: srv, "pattern": "x"})
 # 壊れた入力
@@ -96,7 +96,7 @@ check("通す JSON でない（どのイベントか分からない。Stop を�
 check("通す 配列の入力（イベントが分からない）", P, "Bash", None, raw=b"[1,2]")
 
 # ---- 2回目の敵対レビュー: 誤検出（高1・高2・#4・#5）は通す ----
-HEREDOC_COMMIT = "git commit -F - <<'EOF'\nnight: taskkill と Stop-Process を直した\n\ngit -C C:/Workspace/GameProject/GameBProject reset --hard\nEOF"
+HEREDOC_COMMIT = "git commit -F - <<'EOF'\nnight: taskkill と Stop-Process を直した\n\ngit -C C:/Workspace/Games/GameBProject reset --hard\nEOF"
 for c in ("git add respawnkeeper.ps1", "git diff tools/server_ctl.ps1", "pwsh -File tests/server_ctl.Tests.ps1",
           "grep -n server_ctl docs/", "grep -rn kill src", "pytest -k kill", "git log --grep shutdown",
           'git commit -m "night: shutdown 手順を直した"', "git commit -m 'night: taskkill の説明を直した'", HEREDOC_COMMIT,
@@ -107,11 +107,11 @@ for c in ("git add respawnkeeper.ps1", "git diff tools/server_ctl.ps1", "pwsh -F
     check(f"通す 誤検出 {c[:60]!r}", P, "Bash", {"command": c})
 # 止めるものは引き続き止める（実行する位置）
 for c in ("Get-Process java | Stop-Process", "& taskkill /F /IM java.exe", "Start-Process taskkill -ArgumentList '/F'",
-          r"& C:\Workspace\GameProject\GameBProject\tools\server_ctl.ps1 stop", "bash -c 'kill 1234'", 'cmd /c "taskkill /IM java.exe"',
+          r"& C:\Workspace\Games\GameBProject\tools\server_ctl.ps1 stop", "bash -c 'kill 1234'", 'cmd /c "taskkill /IM java.exe"',
           'pwsh -Command "Stop-Process -Name valheim_server"', "Invoke-Expression 'shutdown /s'", "ls; shutdown /s",
           "echo x\ntaskkill /IM java.exe", r". .\rk-start.bat", "pwsh -File C:/x/respawnkeeper.ps1",
-          'python -c "import os; os.kill(1, 9)"', 'bash -c "cd C:/Workspace/GameProject/GameBProject && git commit -m x"',
-          r'cmd /c "cd /d C:\Workspace\GameProject\GameBProject && git commit -m x"'):
+          'python -c "import os; os.kill(1, 9)"', 'bash -c "cd C:/Workspace/Games/GameBProject && git commit -m x"',
+          r'cmd /c "cd /d C:\Workspace\Games\GameBProject && git commit -m x"'):
     check(f"止める 実行位置 {c[:60]!r}", B, "PowerShell", {"command": c})
 # ---- 守る側の境界 ----
 check("止める 道具名の大文字 MCP__x__y", B, "MCP__x__y", {})

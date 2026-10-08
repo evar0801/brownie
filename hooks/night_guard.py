@@ -190,7 +190,7 @@ LAUNCHERS = {"&", ".", "call", "start", "start-process", "saps", "exec", "nohup"
              "builtin", "invoke-item"}
 INTERPRETERS = {"python", "python3", "py", "node", "deno", "ruby", "perl", "php"}
 SERVERS_JSON = os.environ.get("NIGHT_SERVERS_JSON") or "C:/Workspace/KeeperProject/servers.json"
-FIXED_SERVER_PATHS = (r"C:\Workspace\GameProject\GameAProject\Live", r"%USERPROFILE%\AppData\LocalLow\IronGate\Valheim",
+FIXED_SERVER_PATHS = (r"C:\Workspace\Games\GameAProject\Live", r"%USERPROFILE%\AppData\LocalLow\IronGate\Valheim",
                       r"%APPDATA%\r2modmanPlus-local")
 
 
