@@ -1,0 +1,19 @@
+# 動いている間に書かれるもの（作業コピー・台帳・報告・砂場）は追跡しない
+state/
+sandbox/
+reports/
+inbox.md
+__pycache__/
+
+# この PC の設定（make_settings.py と「ブラウニーを始める」が作る）
+night_settings.json
+projects.txt
+
+# 砂場の題材（tests/sandbox.py が手元の Python から複写する）
+tests/fixtures/ProjA/vendor/
+
+# 環境変数の実値
+.env
+
+# 監査の報告書は公開しない
+SANITIZATION_REPORT.md
